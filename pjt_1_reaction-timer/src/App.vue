@@ -2,7 +2,7 @@
   <h1>Reaction Timer</h1>
   <button @click="startGame" :disabled="isPlaying">시작</button>
   <Block v-if="isPlaying" :delay="delay" @endGame="endGame" />
-  <Results v-if="!isPlaying && reactionTime" :reactionTime="reactionTime" />
+  <Results v-if="!isPlaying && score" :score="score" />
 </template>
 
 <script>
@@ -15,18 +15,18 @@ export default {
   setup() {
     const isPlaying = ref(false)
     const delay = ref(null)
-    const reactionTime = ref(0)
+    const score = ref(0)
     const startGame = () => {
       isPlaying.value = true
       delay.value = Math.floor(Math.random() * 5000) + 2000
     }
 
     const endGame = (time) => {
-      reactionTime.value = time
+      score.value = time
       isPlaying.value = false
     }
 
-    return { isPlaying, delay, startGame, reactionTime, endGame }
+    return { isPlaying, delay, startGame, score, endGame }
   },
 }
 </script>
