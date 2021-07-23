@@ -1,6 +1,9 @@
 <template>
   <h1>JOBS</h1>
-  <ul class="job">
+  <div v-if="!jobs.length">
+    직업이 없어요!
+  </div>
+  <ul class="job" v-else>
     <li v-for="job in jobs" :key="job.id">
       <router-link
         :to="{
@@ -22,23 +25,19 @@ import { ref } from "@vue/reactivity"
 export default {
   name: "Jobs",
   setup() {
-    const jobs = ref([
-      {
-        title: "UX Designer",
-        id: 1,
-        details: "lorem",
-      },
-      {
-        title: "UX Web Developer",
-        id: 2,
-        details: "lorem",
-      },
-      {
-        title: "UX Vue Developer",
-        id: 3,
-        details: "lorem",
-      },
-    ])
+    const jobs = ref([])
+
+    const getJobs = async () => {
+      try {
+        const res = await fetch("http://localhost:3000/jobs")
+        const parsedRes = await res.json()
+        jobs.value = parsedRes
+      } catch (error) {
+        console.log(error.message)
+      }
+    }
+    getJobs()
+
     return {
       jobs,
     }
