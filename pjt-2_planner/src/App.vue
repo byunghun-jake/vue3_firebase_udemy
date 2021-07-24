@@ -1,30 +1,68 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <Navbar />
+  <div class="container">
+    <router-view
+      :projects="projects"
+      @addProject="onAddProject"
+      @editProject="onEditProject"
+      @toggleProjectDone="onToggleProjectDone"
+      @deleteProject="onDeleteProject"
+    />
   </div>
-  <router-view/>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import Navbar from "@/components/Navbar"
+import { ref } from "@vue/reactivity"
+export default {
+  components: { Navbar },
+  setup() {
+    const projects = ref([])
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+    const onAddProject = (data) => {
+      projects.value.push(data)
     }
+
+    const onToggleProjectDone = (projectId) => {
+      projects.value.forEach((project) => {
+        if (project.id === projectId) {
+          project.done = !project.done
+        }
+      })
+    }
+
+    const onDeleteProject = (projectId) => {
+      projects.value = projects.value.filter(
+        (project) => project.id !== projectId,
+      )
+    }
+
+    const onEditProject = (data) => {
+      projects.value.forEach((project) => {
+        if (project.id === data.id) {
+          project.title = data.title
+          project.details = data.details
+        }
+      })
+    }
+
+    return {
+      projects,
+      onAddProject,
+      onToggleProjectDone,
+      onDeleteProject,
+      onEditProject,
+    }
+  },
+}
+</script>
+
+<style lang="scss">
+body {
+  @apply bg-gray-200;
+
+  #app {
+    @apply min-h-screen;
   }
 }
 </style>
