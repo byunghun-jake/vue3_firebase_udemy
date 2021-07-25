@@ -1,0 +1,28 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "Vue 3 공부",
+      "details": "모든 강의 다 듣기",
+      "complete": false
+    },
+    {
+      "id": 2,
+      "title": "지난 기수 프로젝트 분석",
+      "details": "프로젝트 페이지 별로 참고할 내용 정리하기",
+      "complete": false
+    },
+    {
+      "title": "새로운 할 일",
+      "details": "입니다!",
+      "complete": true,
+      "id": 3
+    },
+    {
+      "title": "gg",
+      "details": "sd",
+      "complete": true,
+      "id": 4
+    }
+  ]
+}
